@@ -202,5 +202,5 @@ See the [LICENSE](LICENSE) file for details.
 
 If you use **Chhavi** in your work, please cite it as:
 
-> Varkal, H. (2025). *Chhavi: A Python tool for converting RAMSES outputs to VTKHDF*.  
+> Varkal, H. (2026). *Chhavi: A Python tool for converting RAMSES outputs to VTKHDF*.  
 > GitHub repository: [https://github.com/HemangiVarkal/Chhavi](https://github.com/HemangiVarkal/Chhavi)
