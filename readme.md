@@ -135,7 +135,7 @@ Chhavi/
 │ ├── converter.py
 │ └── parallel.py
 │
-├── tests/ # Unit tests
+├── tests/           # Unit tests
 │ ├── __init__.py
 │ ├── test_cli.py
 │ ├── test_converter.py
@@ -154,6 +154,8 @@ Chhavi/
 │ └── sedov_3d/
 │ ├── output_00001/
 │ └── output_00002/
+│ └── output_00004/
+│ └── output_00008/
 │
 ├── LICENSE
 ├── README.md
@@ -182,17 +184,18 @@ See the [LICENSE](LICENSE) file for details.
 
 ## Authors
 
-- **Dr. Munn Vinayak Shukla** — Head, SSD/SESG/EPSA, Space Applications Centre (SAC), ISRO  
+- **[Hemangi C. Varkal](https://github.com/HemangiVarkal)** — Developer
 - **Shubhankar R. Gharote** — Scientist, SSD/SESG/EPSA, Space Applications Centre (SAC), ISRO  
-- **[Hemangi C. Varkal](https://github.com/HemangiVarkal)** — Developer  
+- **Dr. Munn Vinayak Shukla** — Head, SSD/SESG/EPSA, Space Applications Centre (SAC), ISRO
+- **Dr. Mehul Pandya** - GD, SESG/EPSA, Space Applications Centre (SAC), ISRO
 
 ---
 
 ## Acknowledgements
 
 - This work was carried out at the **Space Applications Centre (SAC), Indian Space Research Organisation (ISRO), Ahmedabad, India**.  
-- The author expresses sincere appreciation to **Dr. Mehul R. Pandya (GD, SESG/EPSA)** and **Dr. Rashmi Sharma (DD, EPSA)** for their continuous encouragement and institutional support.  
-- Special thanks are due to **Dr. Munn Vinayak Shukla (Head, SSD/SESG/EPSA)** and **Shubhankar R. Gharote (Scientist, SSD/SESG/EPSA)** for their invaluable guidance, technical insights, and collaboration throughout the development of this work.  
+- The author expresses sincere appreciation to **Dr. Rashmi Sharma (DD, EPSA)** for their continuous encouragement and institutional support.  
+- Special thanks are due to **Dr. Mehul Pandya (GD, SESG/EPSA)**, **Dr. Munn Vinayak Shukla (Head, SSD/SESG/EPSA)** and **Shubhankar R. Gharote (Scientist, SSD/SESG/EPSA)** for their invaluable guidance, technical insights, and collaboration throughout the development of this work.  
 - Computations were performed using the **SAGAR High Performance Computing (HPC) Facility** of SAC.  
 - Implementation follows **ParaView VTKHDF OverlappingAMR** conventions.  
 
