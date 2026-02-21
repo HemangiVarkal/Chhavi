@@ -104,10 +104,7 @@ Notably, memory usage becomes a primary consideration during visualization in `P
 Overall, `Chhavi` provides a robust and reproducible solution for astrophysical simulation post-processing, balancing accuracy with practical performance.
 
 
-| ![Sedov 3D output 00001](images/sedov_test_00001.png) | ![Sedov 3D output 00002](images/sedov_test_00002.png) |
-|:--:|:--:|
-| **Figure 1:** Volume rendering of `Sedov 3D` output at timestep 00001. | **Figure 2:** Volume rendering of `Sedov 3D` output at timestep 00002. |
-| ![Sedov 3D output 00004](images/sedov_test_00004.png) | ![radial profile for the file sedov_test_00004.vtkhdf](images/profile_together.png) |
+| ![Sedov 3D output 00004](images/sedov_test_00004.png) | ![radial profile for the file sedov_test_00004.vtkhdf](images/profile_comparison_00004.png) |
 | **Figure 3:** Volume rendering of `Sedov 3D` output at timestep 00004. | **Figure 4:** Radial Profile Plot of `Sedov 3D` output at timestep 00004. |
 
 ## Acknowledgements

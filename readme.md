@@ -11,7 +11,7 @@
 
 It provides both a **command-line interface (CLI)** and a **Python API**, making it easy to visualize and analyze data in [ParaView](https://docs.paraview.org/en/latest/) and other compatible tools.
 
-The package also includes test coverage, example scripts, and clear documentation, ensuring it is reproducible and accessible for scientific use.
+The package also includes test coverage, example scripts, profile analysis suite for **Osyris** vs **VTKHDF** validation and clear documentation, ensuring it is reproducible and accessible for scientific use.
 
 ---
 
@@ -24,7 +24,8 @@ The package also includes test coverage, example scripts, and clear documentatio
 - Dry-run mode to preview what would be written without creating files  
 - CLI and Python API for flexible use  
 - Parallel conversion support with configurable number of workers (`--nproc`)  
-- Customizable output directory through `--output-dir` option  
+- Customizable output directory through `--output-dir` option
+- Profile Analysis - **Osyris** vs **VTKHDF** validation (CCC > 0.99)
 - Fully tested with `pytest`  
 
 ---
@@ -85,6 +86,25 @@ output_directory="./vtk_outputs"
 converter.process_output(1)
 ```
 
+### Profile Analysis Workflow
+
+Profile analysis tools are provided in `profiles/` directory:
+```python
+cd profiles/
+python .\compute_osyris_profile.py --base-dir ..\ramses_outputs --folder-name sedov_3d --numbers 4
+python .\compute_vtk_profile.py --base-dir ..\vtk_outputs --folder-name sedov_3d --numbers 4
+python .\analyzing_profiles.py -n 4
+
+```
+This suite:
+
+1. Generates radial density profiles from OSYRIS (RAMSES native) and VTKHDF outputs, saved as CSV files in profile_outputs/ folder:
+    osyris_profile_00002.csv [radius, mean, std, min, max]
+    vtk_profile_00002.csv [radius, mean, std, min, max]
+2. Computes CCC validation metric between CSV profiles (CCC > 0.99 confirms equivalence)
+3. Creates publication-quality comparison plots profile_comparison_00002.png with error bands
+4. test_profile_analysis.py in tests/ validates snapshot output_00004 with 7 automated tests
+
 ---
 
 ### Example Script
@@ -135,16 +155,22 @@ Chhavi/
 │ ├── converter.py
 │ └── parallel.py
 │
-├── tests/           # Unit tests
+├── tests/ # Unit tests
 │ ├── __init__.py
 │ ├── test_cli.py
 │ ├── test_converter.py
 │ ├── test_import.py
 │ ├── test_parallel.py
-│ └── test_parser.py
+│ ├── test_parser.py
+│ └── test_profile_analysis.py
 │
 ├── examples/         # Example usage scripts
 │ └── example_usage.py
+│
+├── profiles/        #  Profile analysis suite
+│ ├── compute_osyris_profile.py
+│ ├── compute_vtk_profile.py
+│ ├── analyzing_profiles.py
 │
 ├── papers/           # JOSS submission papers
 │ ├── paper.md
@@ -153,9 +179,10 @@ Chhavi/
 ├── ramses_outputs/   # Sample real RAMSES outputs
 │ └── sedov_3d/
 │ ├── output_00001/
-│ └── output_00002/
-│ └── output_00004/
-│ └── output_00008/
+│ ├── output_00002/
+│ ├── output_00003/
+│ ├── output_00004/
+│ └── output_00005/
 │
 ├── LICENSE
 ├── README.md
@@ -167,8 +194,9 @@ Chhavi/
 
 ## Notes & Best Practices 
 
-- Default fields if `--fields` is not specified: `density`, `pressure`, `velocity`  
-- Logging: Verbose mode (`--verbose`) gives step-by-step information including number of cells retained per level  
+- Default fields if `--fields` is not specified: `density`, `pressure`, `velocity`
+- Profile validation confirms **Osyris** and **VTKHDF** produce equivalent results
+- Verbose mode `--verbose` provides step-by-step information, including the number of cells retained per level. 
 - Parallel execution automatically uses specified CPU cores (`--nproc`); falls back to serial execution if needed  
 - Output directory is auto-created if it does not exist — no manual setup required  
 - If no cells survive filtering or fields are missing, the output file is skipped, with warnings logged  
@@ -185,17 +213,17 @@ See the [LICENSE](LICENSE) file for details.
 ## Authors
 
 - **[Hemangi C. Varkal](https://github.com/HemangiVarkal)** — Developer
-- **Shubhankar R. Gharote** — Scientist, SSD/SESG/EPSA, Space Applications Centre (SAC), ISRO  
-- **Dr. Munn Vinayak Shukla** — Head, SSD/SESG/EPSA, Space Applications Centre (SAC), ISRO
-- **Dr. Mehul Pandya** - GD, SESG/EPSA, Space Applications Centre (SAC), ISRO
+- **Shubhankar R. Gharote** — Space Applications Centre (SAC), ISRO  
+- **Dr. Munn Vinayak Shukla** — Space Applications Centre (SAC), ISRO
+- **Dr. Mehul Pandya** - Space Applications Centre (SAC), ISRO
 
 ---
 
 ## Acknowledgements
 
 - This work was carried out at the **Space Applications Centre (SAC), Indian Space Research Organisation (ISRO), Ahmedabad, India**.  
-- The author expresses sincere appreciation to **Dr. Rashmi Sharma (DD, EPSA)** for their continuous encouragement and institutional support.  
-- Special thanks are due to **Dr. Mehul Pandya (GD, SESG/EPSA)**, **Dr. Munn Vinayak Shukla (Head, SSD/SESG/EPSA)** and **Shubhankar R. Gharote (Scientist, SSD/SESG/EPSA)** for their invaluable guidance, technical insights, and collaboration throughout the development of this work.  
+- The author expresses sincere appreciation to **Dr. Rashmi Sharma (DD, EPSA)** for continuous encouragement and institutional support.  
+- Special thanks are due to **Dr. Mehul Pandya (Group Director, SESG/EPSA)**, **Dr. Munn Vinayak Shukla (Head, SSD/SESG/EPSA)** and **Shubhankar R. Gharote (Scientist, SSD/SESG/EPSA)** for their invaluable guidance, technical insights, and collaboration throughout the development of this work.  
 - Computations were performed using the **SAGAR High Performance Computing (HPC) Facility** of SAC.  
 - Implementation follows **ParaView VTKHDF OverlappingAMR** conventions.  
 

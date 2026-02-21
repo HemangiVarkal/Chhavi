@@ -1,7 +1,7 @@
+ --------------------------------------------------------------------
 
-     seconds         %    STEP (rank=      1)
-       0.000      12.5    coarse levels           
-       0.000      86.7    refine                  
-       0.000       0.2    load balance            
-       0.000       0.5    particles               
-       0.000     100.0    TOTAL
+     minimum       average       maximum  standard dev        std/av       %   rmn   rmx  TIMER
+       0.000         0.000         0.000         0.000         0.041    47.7     1   4    coarse levels           
+       0.000         0.000         0.000         0.000         0.001    51.7     4   1    refine                  
+       0.000         0.000         0.000         0.000         0.032     0.6     3   8    particles               
+       0.001     100.0    TOTAL
