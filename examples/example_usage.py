@@ -105,7 +105,7 @@ def main():
         except Exception as e:
             print(f"❌ Failed to process snapshot {idx}: {e}")
 
-    print("\n🎉 Example usage finished!")
+    print("\nExample usage finished!")
     print("Set `dry_run=False` to write actual VTKHDF files.")
 
 
