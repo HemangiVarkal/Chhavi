@@ -3,12 +3,12 @@
 """
 RAMSES Radial Density Profiles using Osyris
 
-Compute radial density profiles for RAMSES datasets loaded via OSYRIS.
+Compute radial density profiles for RAMSES datasets loaded via Osyris.
 
 Features:
 - Auto-detects OR manually specifies output snapshots to process
 - Cross-platform: Windows (serial), Linux/macOS (parallel via multiprocessing)
-- Universal OSYRIS loader (tries modern `load()` then legacy `RamsesDataset`)
+- Universal Osyris loader (tries modern `load()` then legacy `RamsesDataset`)
 - Computes mean/std/min/max density per unique radial bin from mesh center
 - Saves clean CSV files to ./profile_outputs/: osyris_profile_XXXXX.csv
 
@@ -260,7 +260,7 @@ def main() -> None:
             run_serial(args, numbers)
         else:  # Unix
             run_parallel(args, numbers)
-        logger.info("Completed: generated %d OSYRIS profiles in %s", len(numbers), output_dir)
+        logger.info("Completed: generated %d Osyris profiles in %s", len(numbers), output_dir)
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
     except Exception as e:
