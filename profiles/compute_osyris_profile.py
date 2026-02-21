@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-RAMSES Radial Density Profiles using OSYRIS (CLI Tool)
+RAMSES Radial Density Profiles using Osyris
 
 Compute radial density profiles for RAMSES datasets loaded via OSYRIS.
 
@@ -29,13 +29,15 @@ from multiprocessing import Pool
 try:
     import osyris
 except ImportError:
-    raise ImportError("OSYRIS not installed. Install with: pip install osyris")
+    raise ImportError("Osyris not installed. Install with: pip install osyris")
 
 logger = logging.getLogger("osyris_profiles")
 
 
 def parse_output_numbers(value: str) -> List[int]:
-    """Parse output numbers: "1", "1,3,5", "10-15"."""
+    """
+    Parse output numbers: "1", "1,3,5", "10-15".
+    """
     numbers = set()
     parts = value.split(",")
     
@@ -46,7 +48,7 @@ def parse_output_numbers(value: str) -> List[int]:
             
         if "-" in part:
             try:
-                start, end = map(int, re.findall(r"\d+", part))  # ✅ FIXED: r"\d+"
+                start, end = map(int, re.findall(r"\d+", part)) 
                 numbers.update(range(start, end + 1))
             except ValueError:
                 raise argparse.ArgumentTypeError(f"Invalid range '{part}'")
@@ -63,7 +65,9 @@ def parse_output_numbers(value: str) -> List[int]:
 
 
 def detect_available_outputs(base_dir: str, folder_name: str) -> List[int]:
-    """Scan folder for output_XXXXX directories."""
+    """
+    Scan folder for output_XXXXX directories.
+    """
     folder_path = Path(base_dir) / folder_name
     
     logger.info("Scanning: %s", folder_path)
@@ -72,11 +76,11 @@ def detect_available_outputs(base_dir: str, folder_name: str) -> List[int]:
         logger.warning("Folder not found: %s", folder_path)
         return []
 
-    pattern = re.compile(r"output_(\d{5})")  # ✅ FIXED: r"output_(\d{5})"
+    pattern = re.compile(r"output_(\d{5})") 
     outputs = []
     try:
         for item in folder_path.iterdir():
-            if item.is_dir():  # Only directories
+            if item.is_dir():  
                 match = pattern.fullmatch(item.name)
                 if match:
                     outputs.append(int(match.group(1)))
@@ -95,7 +99,9 @@ def detect_available_outputs(base_dir: str, folder_name: str) -> List[int]:
 
 
 def match_short_numbers(numbers: List[int], available: List[int]) -> List[int]:
-    """Match short numbers to available 5-digit outputs."""
+    """
+    Match short numbers to available 5-digit outputs.
+    """
     matched = []
     for n in numbers:
         n_str = str(n)
@@ -112,7 +118,9 @@ def match_short_numbers(numbers: List[int], available: List[int]) -> List[int]:
 
 
 def universal_osyris_loader(output_number: int, base_dir: str, folder_name: str):
-    """Load dataset with modern/legacy OSYRIS API."""
+    """
+    Load dataset using Osyris
+    """
     output_path = Path(base_dir) / folder_name / f"output_{output_number:05d}"
     
     if not output_path.exists():
@@ -129,7 +137,9 @@ def universal_osyris_loader(output_number: int, base_dir: str, folder_name: str)
 
 
 def compute_radial_profile(data, output_number: int, output_csv: str):
-    """Compute radial density statistics and save CSV."""
+    """
+    Compute radial density statistics and save CSV.
+    """
     logger.info("Processing output_%05d", output_number)
 
     mesh = data["mesh"]
@@ -159,17 +169,21 @@ def compute_radial_profile(data, output_number: int, output_csv: str):
 
 
 def process_single_snapshot(args_tuple):
-    """Multiprocessing worker."""
+    """
+    Multiprocessing worker.
+    """
     args, output_number = args_tuple
     data = universal_osyris_loader(output_number, args.base_dir, args.folder_name)
-    # ✅ HARDCODED: Always saves to ./profile_outputs/
+    # HARDCODED: Always saves to ./profile_outputs/
     csv_path = Path("profile_outputs") / f"osyris_profile_{output_number:05d}.csv"
     os.makedirs(csv_path.parent, exist_ok=True)
     compute_radial_profile(data, output_number, str(csv_path))
 
 
 def run_serial(args, numbers: List[int]):
-    """Windows-safe serial execution."""
+    """
+    Windows-safe serial execution.
+    """
     logger.info("Running SERIAL mode (Windows)")
     for num in numbers:
         try:
@@ -179,7 +193,9 @@ def run_serial(args, numbers: List[int]):
 
 
 def run_parallel(args, numbers: List[int]):
-    """Unix parallel execution."""
+    """
+    Unix parallel execution.
+    """
     nproc = args.nproc or os.cpu_count() or 1
     logger.info("Running PARALLEL mode (%d cores)", nproc)
     with Pool(processes=nproc) as pool:
@@ -187,9 +203,11 @@ def run_parallel(args, numbers: List[int]):
 
 
 def main() -> None:
-    """Main CLI entrypoint."""
+    """
+    Main CLI entrypoint.
+    """
     parser = argparse.ArgumentParser(
-        description="RAMSES Radial Density Profiles via OSYRIS",
+        description="RAMSES Radial Density Profiles via Osyris",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
@@ -231,7 +249,7 @@ def main() -> None:
         logger.info("No snapshots found to process.")
         return
 
-    # ✅ HARDCODED OUTPUT: Always ./profile_outputs/ (relative to profiles/)
+    # HARDCODED OUTPUT: Always ./profile_outputs/ (relative to profiles/)
     output_dir = "profile_outputs"
     os.makedirs(output_dir, exist_ok=True)
     logger.info("Output directory: %s", os.path.abspath(output_dir))
@@ -242,7 +260,7 @@ def main() -> None:
             run_serial(args, numbers)
         else:  # Unix
             run_parallel(args, numbers)
-        logger.info("✅ Completed: generated %d OSYRIS profiles in %s", len(numbers), output_dir)
+        logger.info("Completed: generated %d OSYRIS profiles in %s", len(numbers), output_dir)
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
     except Exception as e:
