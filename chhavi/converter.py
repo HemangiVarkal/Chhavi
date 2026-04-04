@@ -44,8 +44,6 @@ import numpy as np
 import h5py as h5
 import osyris
 
-__version__ = "1.0.0"
-
 
 def setup_logging(verbose: bool) -> None:
     """

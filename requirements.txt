@@ -3,4 +3,3 @@ h5py>=3.6
 osyris>=1.6
 vtk>=9.2
 tqdm>=4.60
-pytest>=7.0

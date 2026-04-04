@@ -1,36 +1,59 @@
+# ----------------------------
 # Python bytecode
+# ----------------------------
 __pycache__/
 *.py[cod]
 *$py.class
- 
 
-# Virtual environment
+# ----------------------------
+# Virtual environments
+# ----------------------------
 venv/
 .env/
+.venv/
 
+# ----------------------------
+# Packaging / build artifacts
+# ----------------------------
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# ----------------------------
 # OS files
+# ----------------------------
 .DS_Store
 Thumbs.db
 
-
-# Logs and temporary files
+# ----------------------------
+# Logs and temp files
+# ----------------------------
 *.log
 *.tmp
 
-
-# IDE/editor files
+# ----------------------------
+# IDE / Editor files
+# ----------------------------
 .vscode/
 .idea/
 *.swp
 
-
-# Jupyter Notebook checkpoints
+# ----------------------------
+# Jupyter
+# ----------------------------
 .ipynb_checkpoints/
 
-
-# Pytest cache
+# ----------------------------
+# Testing
+# ----------------------------
 .pytest_cache/
+.coverage
+htmlcov/
 
-		
-
-
+# ----------------------------
+# Misc
+# ----------------------------
+*.bak
+*.orig

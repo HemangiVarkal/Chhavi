@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chhavi"
+version = "1.0.0"
+description = "RAMSES to VTKHDF conversion tool for AMR datasets"
+readme = "readme.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Hemangi Varkal", email = "hemangivarkal1612@gmail.com" }
+]
+license = { file = "LICENSE" }
+
+dependencies = [
+  "numpy>=1.20",
+  "h5py>=3.6",
+  "osyris>=1.6",
+  "vtk>=9.2",
+  "tqdm>=4.60"
+]
+
+[project.scripts]
+chhavi = "chhavi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["chhavi*"]
